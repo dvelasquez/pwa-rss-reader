@@ -1,4 +1,6 @@
 # pwa-rss-reader
+[![Build Status](https://travis-ci.org/dvelasquez/pwa-rss-reader.svg?branch=master)](https://travis-ci.org/dvelasquez/pwa-rss-reader)
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.png?v=101)](https://github.com/ellerbrock/typescript-badges/)
 ## Description
 This is a pet-project to create a pwa rss reader that can be installed or just used.
 
