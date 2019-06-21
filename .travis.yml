@@ -13,3 +13,4 @@ install:
   - yarn --frozen-lockfile
 script:
   - yarn test:unit
+  - yarn test:e2e --headless --record --key $CYPRESS_API_KEY
