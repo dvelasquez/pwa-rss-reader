@@ -9,7 +9,10 @@ cache:
     - ~/.yarn
     - node_modules
     - /home/travis/.cache/Cypress
-
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
 install:
   - yarn --frozen-lockfile
 script:
