@@ -2,14 +2,19 @@ sudo: false
 os: linux
 language: node_js
 node_js: '10'
-dist: trusty
+dist: xenial
 cache:
   directories:
     - ~/.nvm
     - ~/.yarn
     - node_modules
-
+    - /home/travis/.cache/Cypress
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
 install:
   - yarn --frozen-lockfile
 script:
-  - echo "skipping tests"
+  - yarn test:unit
+  - yarn test:e2e --headless --record --key $CYPRESS_API_KEY
