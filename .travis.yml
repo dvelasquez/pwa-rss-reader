@@ -12,4 +12,4 @@ cache:
 install:
   - yarn --frozen-lockfile
 script:
-  - echo "skipping tests"
+  - yarn test:unit
