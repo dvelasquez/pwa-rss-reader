@@ -1,0 +1,15 @@
+sudo: false
+os: linux
+language: node_js
+node_js: '10'
+dist: trusty
+cache:
+  directories:
+    - ~/.nvm
+    - ~/.yarn
+    - node_modules
+
+install:
+  - yarn --frozen-lockfile
+script:
+  - echo "skipping tests"
