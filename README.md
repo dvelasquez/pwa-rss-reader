@@ -6,6 +6,7 @@ This is a pet-project to create a pwa rss reader that can be installed or just u
 
 I use extensively a RSS reader to read news so I thought, why not dog-feed me on something I use at a daily basis?
 
+
 ## Project setup
 ```
 yarn

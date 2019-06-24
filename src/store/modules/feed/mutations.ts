@@ -8,6 +8,11 @@ export const mutations: MutationTree<FeedState> = {
     state.name = payload.name;
     state.url = payload.url;
   },
+  FEED_CONTENT_RESOLVED(state, payload: FeedEntity) {
+    state.error = { state: false };
+    state.name = payload.name;
+    state.url = payload.url;
+  },
   STORE_ERROR(state, payload: StoreError) {
     state.error = payload;
   }

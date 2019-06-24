@@ -5,5 +5,8 @@ import { RootState } from '@/store/types';
 export const getters: GetterTree<FeedState, RootState> = {
   resolveFeedUrl(state: FeedState) {
     return state;
+  },
+  getFeedContent(state: FeedState){
+    return state;
   }
 };
