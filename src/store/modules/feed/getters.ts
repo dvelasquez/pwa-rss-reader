@@ -6,7 +6,7 @@ export const getters: GetterTree<FeedState, RootState> = {
   resolveFeedUrl(state: FeedState) {
     return state;
   },
-  getFeedContent(state: FeedState){
+  getFeedContent(state: FeedState) {
     return state;
   }
 };

@@ -1,15 +1,20 @@
 import { Commit } from '@/store/types';
 import { FeedEntity } from '@/domain/entities/FeedEntity';
+import { feed } from '@/store/modules/feed';
 
 export interface FeedResolverInterface {
   resolveFeedUrl(url: string): Promise<Commit<FeedEntity>>;
+
   getDOMWithProxyCORS(url: string): Promise<HTMLDocument>;
+
   getFeedUrl(document: HTMLDocument): string;
+
   getFeedName(document: HTMLDocument): string;
 }
 
 export class FeedResolverService implements FeedResolverInterface {
   $fetch: GlobalFetch['fetch'];
+
   constructor(globalFetch: any) {
     this.$fetch = globalFetch.bind();
   }
@@ -20,7 +25,7 @@ export class FeedResolverService implements FeedResolverInterface {
       return {
         type: 'FEED_RESOLVED',
         payload: {
-          name: this.getFeedName(document),
+          title: this.getFeedName(document),
           url: `${url}/${this.getFeedUrl(document)}`
         }
       };
@@ -52,11 +57,31 @@ export class FeedResolverService implements FeedResolverInterface {
     if (linkElement) {
       const href = linkElement.getAttribute('href');
       if (!href) {
-        throw new Error('RSSError: href element is null');
+        const error = 'RSSError: href element is null';
+        console.warn(error);
+        throw Error(error);
       }
       return href;
     } else {
-      throw new Error('RSSError: Document without feed RSS');
+      const feedBurnerUrl = this.findFeedburnerLink(document);
+      if (feedBurnerUrl) {
+        return feedBurnerUrl;
+      }
+      const error = 'RSSError: Document without feed RSS';
+      console.warn(error);
+      throw Error(error);
+    }
+  }
+
+  public findFeedburnerLink(document: HTMLDocument): string {
+    const links: NodeListOf<HTMLLinkElement> = document.querySelectorAll(
+      "[href*='feedburner.com']"
+    );
+    const link = links[0];
+    if (links.length > 0 && link.tagName === 'A') {
+      return links[0].href;
+    } else {
+      throw Error('RSSError: Unable to find Feedburner rss link');
     }
   }
 

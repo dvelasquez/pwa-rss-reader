@@ -16,14 +16,14 @@ export class FeedReaderService implements FeedReaderInterface {
   public async readFeed(url: string): Promise<Commit<FeedEntity>> {
     try {
       const xmlDocument = await this.fetchRSSFeed(url);
-      const rssContent = await this.parseFeedDocument(xmlDocument);
+      const rss = await this.parseFeedDocument(xmlDocument);
       return {
         type: 'RSS_CONTENT_UPDATED',
         payload: {
-          name: rssContent.title,
-          description: rssContent.description,
+          title: rss.title,
+          description: rss.description,
           url: url,
-          content: rssContent
+          content: rss
         }
       };
     } catch (e) {
@@ -33,7 +33,9 @@ export class FeedReaderService implements FeedReaderInterface {
 
   async fetchRSSFeed(url: string): Promise<XMLDocument> {
     try {
-      const fetchedXML = await this.$fetch(url);
+      const fetchedXML = await this.$fetch(
+        `https://cors-anywhere.herokuapp.com/${url}`
+      );
       const xmlRSS = await fetchedXML.text();
       return new DOMParser().parseFromString(xmlRSS, 'text/xml');
     } catch (e) {
@@ -42,7 +44,8 @@ export class FeedReaderService implements FeedReaderInterface {
   }
 
   parseFeedDocument(document: XMLDocument): RSSDocumentEntity {
-    return this.xmlToJson(document);
+    const channel = this.xmlToJson(document).rss.channel;
+    return channel;
   }
 
   xmlToJson(xml: Element | Document | XMLDocument | any): any {

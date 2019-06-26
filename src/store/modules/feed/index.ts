@@ -6,7 +6,7 @@ import { FeedState } from '@/store/modules/feed/types';
 import { RootState } from '@/store/types';
 
 export const state: FeedState = {
-  name: 'PWA RSS READER',
+  title: 'PWA RSS READER',
   url: '',
   error: { state: false }
 };
