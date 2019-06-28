@@ -1,13 +1,16 @@
 <template>
   <div class="about">
     <h1>This is the Feeds page</h1>
-    <input type="url" v-model="url" />
-    <button @click="findFeed(url)">FIND FEED</button>
+    <input type="url" v-model="url" id="entry-url" />
+    <button @click="findFeed(url)" id="find-feed">FIND FEED</button>
     <div>
       <h2>{{ feed.title }}</h2>
       <h3>{{ feed.url }}</h3>
-      <button @click="loadFeedContent(feed.url)">GET FEED CONTENT</button>
-      <pre>
+      <button @click="loadFeedContent(feed.url)" id="get-feed">
+        GET FEED CONTENT
+      </button>
+      <h4>{{ this.feed.content && this.feed.content.description }}</h4>
+      <pre id="json-result">
         {{ JSON.stringify(this.feed, null, 2) }}
       </pre>
     </div>

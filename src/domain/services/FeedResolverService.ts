@@ -7,7 +7,7 @@ export interface FeedResolverInterface {
 
   getDOMWithProxyCORS(url: string): Promise<HTMLDocument>;
 
-  getFeedUrl(document: HTMLDocument): string;
+  getFeedUrl(document: HTMLDocument, url: string): string;
 
   getFeedName(document: HTMLDocument): string;
 }
@@ -26,7 +26,7 @@ export class FeedResolverService implements FeedResolverInterface {
         type: 'FEED_RESOLVED',
         payload: {
           title: this.getFeedName(document),
-          url: `${url}/${this.getFeedUrl(document)}`
+          url: `${this.getFeedUrl(document, url)}`
         }
       };
     } catch (e) {
@@ -50,7 +50,7 @@ export class FeedResolverService implements FeedResolverInterface {
     }
   }
 
-  public getFeedUrl(document: HTMLDocument): string {
+  public getFeedUrl(document: HTMLDocument, url: string): string {
     const linkElement = document.querySelector(
       'link[type="application/rss+xml"]'
     );
@@ -61,7 +61,7 @@ export class FeedResolverService implements FeedResolverInterface {
         console.warn(error);
         throw Error(error);
       }
-      return href;
+      return `${url}/${href}`;
     } else {
       const feedBurnerUrl = this.findFeedburnerLink(document);
       if (feedBurnerUrl) {
@@ -79,7 +79,7 @@ export class FeedResolverService implements FeedResolverInterface {
     );
     const link = links[0];
     if (links.length > 0 && link.tagName === 'A') {
-      return links[0].href;
+      return `${links[0].href}?format=xml`;
     } else {
       throw Error('RSSError: Unable to find Feedburner rss link');
     }
