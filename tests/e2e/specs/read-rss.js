@@ -20,7 +20,7 @@ describe('RSS Read', () => {
     cy.get('#find-feed').click();
     cy.contains('h2', 'Hacker News');
     cy.contains('h3', 'https://news.ycombinator.com/rss');
-    cy.wait(500);
+    cy.wait(1000);
     cy.get('#get-feed').click();
     cy.contains(
       'h4',
@@ -40,7 +40,7 @@ describe('RSS Read', () => {
     cy.get('#find-feed').click();
     cy.contains('h2', 'FayerWayer');
     cy.contains('h3', 'https://feeds.feedburner.com/fayerwayer');
-    cy.wait(500);
+    cy.wait(1000);
     cy.get('#get-feed').click();
     cy.contains('h4', 'Dosis diarias de tecnología en español.™');
   });
