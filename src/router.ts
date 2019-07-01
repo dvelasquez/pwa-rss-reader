@@ -12,6 +12,12 @@ export default new Router({
       name: 'feeds',
       component: () =>
         import(/* webpackChunkName: "about" */ './views/TheFeeds.vue')
+    },
+    {
+      path: '/feed-list',
+      name: 'feed-list',
+      component: () =>
+        import(/* webpackChunkName: "about" */ './views/TheFeedList.vue')
     }
   ]
 });

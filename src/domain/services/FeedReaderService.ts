@@ -1,6 +1,7 @@
-import { Commit } from '@/store/types';
-import { RSSDocumentEntity } from '@/domain/entities/RSSDocumentEntity';
-import { FeedEntity } from '@/domain/entities/FeedEntity';
+import {Commit} from '@/store/types';
+import {RSSDocumentEntity} from '@/domain/entities/RSSDocumentEntity';
+import {FeedEntity} from '@/domain/entities/FeedEntity';
+import {RSSItemEntity} from '@/domain/entities/RSSItemEntity';
 
 export interface FeedReaderInterface {
   readFeed(url: string): Promise<Commit<FeedEntity>>;
@@ -45,7 +46,22 @@ export class FeedReaderService implements FeedReaderInterface {
 
   parseFeedDocument(document: XMLDocument): RSSDocumentEntity {
     const channel = this.xmlToJson(document).rss.channel;
-    return channel;
+    const rssDocumentEntity = channel.item.map((item: RSSItemEntity) => {
+      if (item.pubDate && this.isValidDate(item.pubDate)) {
+        return item;
+      } else {
+        return { ...item, pubDate: Date.parse(item.pubDate) };
+      }
+    });
+    return rssDocumentEntity;
+  }
+
+  isValidDate(date: any): boolean {
+    return (
+      date &&
+      Object.prototype.toString.call(date) === '[object Date]' &&
+      !isNaN(date)
+    );
   }
 
   xmlToJson(xml: Element | Document | XMLDocument | any): any {

@@ -1,7 +1,7 @@
 export interface RSSItemEntity {
   title?: string;
   link?: string;
-  description?: string | any;
+  description?: any;
   comments?: string;
-  pubDate?: Date;
+  pubDate?: Date | any;
 }
