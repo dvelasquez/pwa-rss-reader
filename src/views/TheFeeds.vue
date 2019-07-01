@@ -27,7 +27,7 @@ const FEED_MODULE: string = 'feed';
 @Component({
   components: {}
 })
-export default class Feeds extends Vue {
+export default class TheFeeds extends Vue {
   url: string = '';
   @State(FEED_MODULE) public feed!: FeedState;
   @Action('resolveFeedUrl', { namespace: FEED_MODULE })
