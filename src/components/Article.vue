@@ -11,7 +11,7 @@ import Component from 'vue-class-component';
 import { Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class FeedItem extends Vue {
+export default class Article extends Vue {
   @Prop({ default: 'Loading Title...' })
   title!: string;
   @Prop({ default: '' })

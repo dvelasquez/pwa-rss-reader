@@ -1,31 +1,26 @@
-import {Commit} from '@/store/types';
-import {RSSDocumentEntity} from '@/domain/entities/RSSDocumentEntity';
-import {FeedEntity} from '@/domain/entities/FeedEntity';
-import {RSSItemEntity} from '@/domain/entities/RSSItemEntity';
+import { Commit } from '@/store/types';
+import { ArticleEntity } from '@/domain/entities/ArticleEntity';
 
-export interface FeedReaderInterface {
-  readFeed(url: string): Promise<Commit<FeedEntity>>;
+export interface ArticleReaderInterface {
+  readArticlesFromFeed(url: string): Promise<Commit<ArticleEntity[]>>;
 }
 
-export class FeedReaderService implements FeedReaderInterface {
+export class ArticleReaderService implements ArticleReaderInterface {
   private $fetch: GlobalFetch['fetch'];
 
   constructor(globalFetch: any) {
     this.$fetch = globalFetch.bind();
   }
 
-  public async readFeed(url: string): Promise<Commit<FeedEntity>> {
+  public async readArticlesFromFeed(
+    url: string
+  ): Promise<Commit<ArticleEntity[]>> {
     try {
       const xmlDocument = await this.fetchRSSFeed(url);
       const rss = await this.parseFeedDocument(xmlDocument);
       return {
         type: 'RSS_CONTENT_UPDATED',
-        payload: {
-          title: rss.title,
-          description: rss.description,
-          url: url,
-          content: rss
-        }
+        payload: rss
       };
     } catch (e) {
       throw e;
@@ -44,9 +39,9 @@ export class FeedReaderService implements FeedReaderInterface {
     }
   }
 
-  parseFeedDocument(document: XMLDocument): RSSDocumentEntity {
+  parseFeedDocument(document: XMLDocument): ArticleEntity[] {
     const channel = this.xmlToJson(document).rss.channel;
-    const rssDocumentEntity = channel.item.map((item: RSSItemEntity) => {
+    const rssDocumentEntity = channel.item.map((item: ArticleEntity) => {
       if (item.pubDate && this.isValidDate(item.pubDate)) {
         return item;
       } else {

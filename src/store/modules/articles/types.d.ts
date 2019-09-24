@@ -1,4 +1,4 @@
-import {FeedSourceEntity} from '@/domain/entities/FeedSourceEntity'
+import { ArticleEntity } from '@/domain/entities/ArticleEntity';
 
 export interface StoreError {
   state: boolean;
@@ -7,6 +7,7 @@ export interface StoreError {
   stack?: string;
 }
 
-export interface FeedSourceState extends FeedSourceEntity {
+export interface ArticleState {
+  list: ArticleEntity[];
   error: StoreError;
 }

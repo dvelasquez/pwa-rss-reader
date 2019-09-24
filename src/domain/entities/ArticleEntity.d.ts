@@ -1,4 +1,4 @@
-export interface RSSItemEntity {
+export interface ArticleEntity {
   title?: string;
   link?: string;
   description?: any;

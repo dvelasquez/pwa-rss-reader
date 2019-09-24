@@ -1,9 +1,9 @@
+import { ArticleEntity } from '@/domain/entities/ArticleEntity';
+import { FeedSourceEntity } from '@/domain/entities/FeedSourceEntity';
 import { Commit } from '@/store/types';
-import { FeedEntity } from '@/domain/entities/FeedEntity';
-import { feed } from '@/store/modules/feed';
 
 export interface FeedResolverInterface {
-  resolveFeedUrl(url: string): Promise<Commit<FeedEntity>>;
+  resolveFeedUrl(url: string): Promise<Commit<FeedSourceEntity>>;
 
   getDOMWithProxyCORS(url: string): Promise<HTMLDocument>;
 
@@ -19,14 +19,15 @@ export class FeedResolverService implements FeedResolverInterface {
     this.$fetch = globalFetch.bind();
   }
 
-  public async resolveFeedUrl(url: string): Promise<Commit<FeedEntity>> {
+  public async resolveFeedUrl(url: string): Promise<Commit<FeedSourceEntity>> {
     try {
       const document = await this.getDOMWithProxyCORS(url);
       return {
-        type: 'FEED_RESOLVED',
+        type: 'FEED_SOURCE_RESOLVED',
         payload: {
           title: this.getFeedName(document),
-          url: `${this.getFeedUrl(document, url)}`
+          url: `${this.getFeedUrl(document, url)}`,
+          articles: []
         }
       };
     } catch (e) {

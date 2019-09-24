@@ -11,13 +11,19 @@ export default new Router({
       path: '/feeds',
       name: 'feeds',
       component: () =>
-        import(/* webpackChunkName: "about" */ './views/TheFeeds.vue')
+        import(/* webpackChunkName: "feeds" */ './views/TheFeedsList.vue')
     },
     {
-      path: '/feed-list',
-      name: 'feed-list',
+      path: '/feed-source',
+      name: 'feed-source',
       component: () =>
-        import(/* webpackChunkName: "about" */ './views/TheFeedList.vue')
+        import(/* webpackChunkName: "feed-source" */ './views/TheFeedSource.vue')
+    },
+    {
+      path: '/feed-importer',
+      name: 'feed-importer',
+      component: () =>
+        import(/* webpackChunkName: "feed-importer" */ './views/TheFeedImporter.vue')
     }
   ]
 });

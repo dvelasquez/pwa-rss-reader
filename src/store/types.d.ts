@@ -1,4 +1,6 @@
-import { FeedState } from '@/store/modules/feed/types';
+import { ArticleState } from '@/store/modules/articles/types';
+import { FeedSourceState } from '@/store/modules/feed/types';
+import { PersistenceState } from '@/store/modules/persistence/types';
 
 export interface Commit<T> {
   type: string;
@@ -7,5 +9,7 @@ export interface Commit<T> {
 
 export interface RootState {
   version: string;
-  feed?: FeedState;
+  feed?: FeedSourceState;
+  articles?: ArticleState;
+  persistence?: PersistenceState;
 }
